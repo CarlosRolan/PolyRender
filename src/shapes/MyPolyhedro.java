@@ -9,128 +9,134 @@ import java.util.List;
 
 public class MyPolyhedro {
 
-	protected MyPolygon[] polygons;
-	protected double volumne;
-	protected Color color;
+	protected Poly3D[] mPolygons;
+	protected double mVolumne;
+	protected Color mColor;
 
 	// CONSTRUCTORs
-	public MyPolyhedro(Color color, MyPolygon... polygons) {
-		this.color = color;
-		this.polygons = polygons;
-		this.setPolygonColor();
+	public MyPolyhedro(Color color, Poly3D... polygons) {
+		mColor = color;
+		mPolygons = polygons;
+		setPolygonColor();
 	}
 
-	public MyPolyhedro(MyPolygon... polygons) {
+	public MyPolyhedro(Poly3D... polygons) {
 		// We are not using this color
-		this.color = Color.WHITE;
-		this.polygons = polygons;
+		mColor = Color.WHITE;
+		mPolygons = polygons;
 	}
 
-	public void renderFaces(Graphics g) {
-		for (MyPolygon poly : this.polygons) {
-			poly.renderFaces(g);
+	public void render(Graphics g) {
+		for (Poly3D poly : mPolygons) {
+			poly.render(g);
 		}
 	}
 
-	public void renderLines(Graphics g) {
-		for (MyPolygon poly : this.polygons) {
-			poly.renderLines(g);
+	public void renderFaces(Graphics g, int centerX, int centerY) {
+		for (Poly3D poly : mPolygons) {
+			poly.renderFaces(g, centerX, centerY);
+		}
+	}
+
+	public void renderLines(Graphics g, int centerX, int centerY) {
+		for (Poly3D poly : mPolygons) {
+			poly.renderLines(g, centerX, centerY);
 		}
 	}
 
 	// IMPORTANTISIMO HACE QUE CARAS SE VEN DELANTE Y QUE CARAS DETRAS
 	// TODO
-	private MyPolygon[] sortPolygons() {
-		List<MyPolygon> polyList = new ArrayList<MyPolygon>();
+	private Poly3D[] sortPolygons() {
+		List<Poly3D> polyList = new ArrayList<Poly3D>();
 
-		for (MyPolygon myPolygon : this.polygons) {
+		for (Poly3D myPolygon : mPolygons) {
 			polyList.add(myPolygon);
 		}
 
-		Collections.sort(polyList, new Comparator<MyPolygon>() {
+		Collections.sort(polyList, new Comparator<Poly3D>() {
 			@Override
-			public int compare(MyPolygon p1, MyPolygon p2) {
+			public int compare(Poly3D p1, Poly3D p2) {
 				return p2.getAverageDepth() - p1.getAverageDepth() < 0 ? 1 : -1;
 			}
 		});
 
-		for (int i = 0; i < this.polygons.length; i++) {
-			this.polygons[i] = polyList.get(i);
+		for (int i = 0; i < mPolygons.length; i++) {
+			mPolygons[i] = polyList.get(i);
 		}
 
-		return this.polygons;
+		return mPolygons;
 	}
 
 	// [START]
 	// =====================TRANSFORMATIONS===================================================
 	// Rotation
 	public void rotate(double xDegrees, double yDegrees, double zDegrees) {
-		for (MyPolygon p : this.polygons) {
+		for (Poly3D p : mPolygons) {
 			p.rotate(xDegrees, yDegrees, zDegrees);
 		}
-		this.sortPolygons();
+		sortPolygons();
 	}
 
 	public void rotateX(double xDegrees) {
-		for (MyPolygon p : this.polygons) {
+		for (Poly3D p : mPolygons) {
 			p.rotateX(xDegrees);
 		}
-		this.sortPolygons();
+		sortPolygons();
 	}
 
 	public void rotateY(double yDegrees) {
-		for (MyPolygon p : this.polygons) {
+		for (Poly3D p : mPolygons) {
 			p.rotateY(yDegrees);
 		}
-		this.sortPolygons();
+		sortPolygons();
 	}
 
 	public void rotateZ(double zDegrees) {
-		for (MyPolygon p : this.polygons) {
+		for (Poly3D p : mPolygons) {
 			p.rotateZ(zDegrees);
 		}
-		this.sortPolygons();
+		sortPolygons();
 	}
 
 	public void scale(double scalefactorX, double scalefactorY,
 			double scalefactorZ) {
-		for (MyPolygon p : this.polygons) {
+		for (Poly3D p : mPolygons) {
 			p.scale(scalefactorX, scalefactorY, scalefactorZ);
 		}
-		this.sortPolygons();
+		sortPolygons();
 	}
 
 	public void scaleX(double scalefactorX) {
-		for (MyPolygon p : this.polygons) {
+		for (Poly3D p : mPolygons) {
 			p.scaleX(scalefactorX);
 		}
-		this.sortPolygons();
+		sortPolygons();
 	}
 
 	public void scaleY(double scalefactorY) {
-		for (MyPolygon p : this.polygons) {
+		for (Poly3D p : mPolygons) {
 			p.scaleY(scalefactorY);
 		}
-		this.sortPolygons();
+		sortPolygons();
 	}
 
 	public void translate(int xDist, int yDist, int zDist) {
-		for (MyPolygon p : this.polygons) {
+		for (Poly3D p : mPolygons) {
 			p.translate(xDist, yDist, zDist);
 		}
-		this.sortPolygons();
+		sortPolygons();
 	}
 	// [END]
 	// ==========================================================================================
 
 	private void setPolygonColor() {
-		for (MyPolygon poly : this.polygons) {
-			poly.setColor(this.color);
+		for (Poly3D poly : mPolygons) {
+			poly.setColor(mColor);
 		}
 	}
 
 	private void setPolygonColor(Color color) {
-		for (MyPolygon poly : this.polygons) {
+		for (Poly3D poly : mPolygons) {
 			poly.setColor(color);
 		}
 	}

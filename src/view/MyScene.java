@@ -6,10 +6,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import shapes.MyCube;
-import shapes.MyPoint;
-import shapes.MyPolygon;
 import shapes.MyPolyhedro;
-import shapes.MyRectangle;
+import shapes.Point3D;
+import shapes.Poly3D;
 
 public class MyScene extends Canvas {
 
@@ -23,20 +22,18 @@ public class MyScene extends Canvas {
 
 	// OBJECTS TO RENDER
 	protected MyCube cube;
-	protected MyCube cube2;
-	protected MyRectangle rectangle;
 
 	// XYZ AXIS
-	private final MyPolygon xAxis = new MyPolygon(Color.RED,
-			new MyPoint(MyViewParams.DEFAULT_WIDTH, 0, 0), new MyPoint(0, 0, 0),
-			new MyPoint(-MyViewParams.DEFAULT_WIDTH, 0, 0));
-	private final MyPolygon yAxis = new MyPolygon(Color.GREEN,
-			new MyPoint(0, MyViewParams.DEFAULT_WIDTH, 0), new MyPoint(0, 0, 0),
-			new MyPoint(0, -MyViewParams.DEFAULT_WIDTH, 0));
-	private final MyPolygon zAxis = new MyPolygon(Color.BLUE,
-			new MyPoint(0, 0, MyViewParams.DEFAULT_HEIGHT),
-			new MyPoint(0, 0, 0),
-			new MyPoint(0, 0, -MyViewParams.DEFAULT_WIDTH));
+	private final Poly3D xAxis = new Poly3D(Color.RED,
+			new Point3D(MyViewParams.DEFAULT_WIDTH, 0, 0), new Point3D(0, 0, 0),
+			new Point3D(-MyViewParams.DEFAULT_WIDTH, 0, 0));
+	private final Poly3D yAxis = new Poly3D(Color.GREEN,
+			new Point3D(0, MyViewParams.DEFAULT_WIDTH, 0), new Point3D(0, 0, 0),
+			new Point3D(0, -MyViewParams.DEFAULT_WIDTH, 0));
+	private final Poly3D zAxis = new Poly3D(Color.BLUE,
+			new Point3D(0, 0, MyViewParams.DEFAULT_HEIGHT),
+			new Point3D(0, 0, 0),
+			new Point3D(0, 0, -MyViewParams.DEFAULT_WIDTH));
 
 	private final MyPolyhedro axis = new MyPolyhedro(xAxis, yAxis, zAxis);
 
@@ -67,7 +64,6 @@ public class MyScene extends Canvas {
 		// Cube lenght = width = depth
 		// REMEBER TO RENDER THE OBJECTS
 		this.cube = new MyCube(100);
-		this.cube2 = new MyCube(110);
 	}
 
 	// RENNDER OUR CANVAS-ALL THINGS U WANNA SEE HAS TO BE RENDER HERE
@@ -89,11 +85,9 @@ public class MyScene extends Canvas {
 		// ===============
 
 		// TODO SHIT HAPPENING
-		this.axis.renderLines(g);
+		//this.axis.renderLines(g);
 
-		this.cube.renderFaces(g);
-
-		this.cube2.renderLines(g);
+		//this.cube.renderFaces(g);
 
 		g.dispose();
 		bs.show();

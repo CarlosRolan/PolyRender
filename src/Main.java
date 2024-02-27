@@ -1,3 +1,4 @@
+import editor.EditorView;
 import view.MyView;
 
 /**
@@ -13,7 +14,7 @@ public class Main {
 	private static MyView s = new MyView();
 
 	public static void main(String[] args) {
-		s.start();
+		EditorView.showEditor();
 	}
 
 }

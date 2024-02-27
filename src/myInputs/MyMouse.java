@@ -6,66 +6,71 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import view.MyView;
+import editor.SceneActions;
 
 public class MyMouse
 		implements
-			MouseListener,
-			MouseMotionListener,
-			MouseWheelListener {
+		MouseListener,
+		MouseMotionListener,
+		MouseWheelListener {
 
-	boolean isDragging = false;
 	int x;
 	int y;
+
+	private boolean draggin;
+
+	private SceneActions mSceneListener;
+
+	public MyMouse() {
+
+	}
+
+	public MyMouse(SceneActions actions) {
+		mSceneListener = actions;
+	}
 
 	// EVENTS
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		System.out.println("MOUSE WHEEL MOVED:");
+		int rotation = e.getWheelRotation();
+		if (rotation == 1) {
+			//System.out.println("zoom-");
+			mSceneListener.zoomOut();
+		} else {
+			//System.out.println("zoom+");
+			mSceneListener.zoomIn();
+		}
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if (isDragging) {
-			System.out.println("TO------------------>");
-		} else {
-			System.out.println("MOUSE DRAGGED FROM:" + "[" + e.getY() + "]"
-					+ "[" + e.getX() + "]");
-			y = e.getY();
-			x = e.getX();
-			isDragging = true;
-		}
-
+		//System.out.println("DRAGGIN[" + e.getX() + "," + e.getY() + "]");
+		mSceneListener.drawTempLine(x, y, e.getX(), e.getY());
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		System.out.println("MOUSE MOVED FROM:" + "[" + e.getY() + "]" + "["
-				+ e.getX() + "]");
+		//System.out.println("POS[" + e.getX() + "," + e.getY() + "]");
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("MOUSE CLICKED = press and realese");
-		System.out.println("[" + e.getY() + "]" + "[" + e.getX() + "]");
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println(
-				"MOUSE PRESSED " + e.getButton() + ":" + getClickType(e)
-						+ " AT:" + "[" + e.getX() + "]" + "[" + e.getY() + "]");
+		x = e.getX();
+		y = e.getY();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (isDragging) {
-			System.out.println("FROM [" + x + "," + y + "]" + "[" + e.getX()
-					+ "]" + "[" + e.getY() + "]");
-		} else {
-			System.out.println("MOUSE RELEASED AT:" + "[" + e.getX() + "]" + "["
-					+ e.getY() + "]");
-		}
+
+		//System.out.println("P1[" + x + "," + y + "]");
+		//System.out.println("P2[" + e.getX() + "," + e.getY() + "]");
+
+		mSceneListener.drawLine(x, y, e.getX(), e.getY());
 
 	}
 
@@ -81,19 +86,19 @@ public class MyMouse
 
 	private String getClickType(MouseEvent e) {
 		switch (e.getClickCount()) {
-			case -1 :
+			case -1:
 				return null;
-			case 1 :
+			case 1:
 				return MyClickType.leftClick.toString();
-			case 2 :
+			case 2:
 				return MyClickType.wheelClick.toString();
-			case 3 :
+			case 3:
 				return MyClickType.rightClick.toString();
-			case 4 :
+			case 4:
 				return MyClickType.previousClick.toString();
-			case 5 :
+			case 5:
 				return MyClickType.nextClick.toString();
-			default :
+			default:
 				return null;
 		}
 
