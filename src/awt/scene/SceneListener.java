@@ -1,5 +1,8 @@
 package awt.scene;
 
+import java.awt.KeyEventDispatcher;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -12,7 +15,7 @@ public class SceneListener
 		implements
 		MouseListener,
 		MouseMotionListener,
-		MouseWheelListener {
+		KeyListener, KeyEventDispatcher, MouseWheelListener {
 
 	public enum MyClickType {
 		rightClick, leftClick, wheelClick, nextClick, previousClick
@@ -117,8 +120,32 @@ public class SceneListener
 
 	}
 
-	public interface SceneActionManager {
+	// KEYBOARD IMPLEMENTATION
+	@Override
+	public void keyTyped(KeyEvent e) {
+		System.out.println("KEY PRESSED " + e.getKeyChar());
 
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.isActionKey())
+			System.out.println("KEY PRESSED " + e.paramString());
+		else
+			System.out.println("KEY PRESSED " + e.getKeyChar());
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		System.out.println("KEY PRESSED " + e.getKeyChar());
+
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent e) {
+		System.out.println(e.getKeyCode());
+		return false;
 	}
 
 }
