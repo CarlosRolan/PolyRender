@@ -1,4 +1,4 @@
-package motorGraphic;
+package engine;
 
 public interface Parameters {
 	// Bigger values less perspective angle

@@ -1,18 +1,20 @@
-package editor;
+package awt.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-import javax.swing.JFrame;
-
-import motorGraphic.MyBuffer;
+import awt.scene.SceneWindow;
+import engine.scene3D.SceneBuffer;
 import view.MyViewParams;
 
 /**
  *
  * @author carlos
  */
-public class EditorView extends JFrame {
+public class EditorView extends Frame {
 
     private static EditorView instance;
 
@@ -23,27 +25,21 @@ public class EditorView extends JFrame {
         instance.setVisible(true);
     }
 
-    private Scene scene;
-    private MyBuffer buffer;
+    private SceneWindow sceneWindow;
+    private SceneBuffer buffer;
 
-    /**
-     * Creates new form DefaultView
-     */
     public EditorView() {
-
         initWindow(MyViewParams.DEFAULT_WIDTH, MyViewParams.DEFAULT_HEIGHT);
         initComponents();
         initBuffer();
-
     }
 
     // INIT METHODS
     private void initBuffer() {
-        buffer = new MyBuffer(new Runnable() {
+        buffer = new SceneBuffer(new Runnable() {
 
             @Override
             public void run() {
-                scene.init();
                 long lastTime = System.nanoTime();
                 long timer = System.currentTimeMillis();
                 final double ns = 1000000000 / 60;
@@ -56,16 +52,15 @@ public class EditorView extends JFrame {
                     delta += (now - lastTime) / ns;
                     lastTime = now;
 
-                    lb_s_h.setText("Height:" + scene.getHeight());
-                    lb_s_w.setText("Width:" + scene.getWidth());
+                    onRender();
 
                     while (delta >= 1) {
-                        scene.update();
+                        sceneWindow.update();
                         // Time between renders
                         delta--;
 
                         if (buffer.isRunning())
-                            scene.render();
+                            sceneWindow.render();
 
                         // Counts de nº of frames in a delta time
                         buffer.countFrame();
@@ -91,7 +86,7 @@ public class EditorView extends JFrame {
 
     private void initComponents() {
 
-        scene = new Scene();
+        sceneWindow = new SceneWindow();
         p_info = new javax.swing.JPanel();
         lb_x = new javax.swing.JLabel();
         lb_y = new javax.swing.JLabel();
@@ -101,7 +96,47 @@ public class EditorView extends JFrame {
         p_control = new javax.swing.JPanel();
         p_south = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowActivated(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void windowClosed(WindowEvent arg0) {
+                System.out.println("Has closed");
+            }
+
+            @Override
+            public void windowClosing(WindowEvent arg0) {
+                System.out.println("Is closing");
+                dispose();
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent arg0) {
+                System.out.println("Is deactivated");
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void windowIconified(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void windowOpened(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+        });
+
+        // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         setLocationRelativeTo(null);
 
@@ -141,7 +176,7 @@ public class EditorView extends JFrame {
                                         .addComponent(lb_s_h))
                                 .addContainerGap(77, Short.MAX_VALUE)));
 
-        getContentPane().add(p_info, java.awt.BorderLayout.PAGE_START);
+        add(p_info, java.awt.BorderLayout.PAGE_START);
 
         p_control.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -154,7 +189,7 @@ public class EditorView extends JFrame {
                 p_controlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 88, Short.MAX_VALUE));
 
-        getContentPane().add(p_control, java.awt.BorderLayout.LINE_START);
+        add(p_control, java.awt.BorderLayout.LINE_START);
 
         p_south.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -167,9 +202,9 @@ public class EditorView extends JFrame {
                 p_southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 100, Short.MAX_VALUE));
 
-        getContentPane().add(p_south, java.awt.BorderLayout.PAGE_END);
+        add(p_south, java.awt.BorderLayout.PAGE_END);
 
-        getContentPane().add(scene, BorderLayout.CENTER);
+        add(sceneWindow, BorderLayout.CENTER);
 
         pack();
     }
@@ -184,5 +219,10 @@ public class EditorView extends JFrame {
     private javax.swing.JPanel p_info;
     private javax.swing.JPanel p_south;
     // End of variables declaration
+
+    public void onRender() {
+        lb_s_h.setText("Height:" + sceneWindow.getHeight());
+        lb_s_w.setText("Width:" + sceneWindow.getWidth());
+    }
 
 }

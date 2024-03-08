@@ -1,23 +1,26 @@
-package shapes;
+package engine.obj.basic;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Polygon;
 
-import motorGraphic.PointConverter;
+import engine.PointConverter;
 
 /**
  * @author Carlos Rolán Díaz
  *
  */
-public class Poly3D extends Polygon {
+public class Poly3D {
 
 	private static final long serialVersionUID = 1L;
 
+	private double mArea;
 	private Point3D[] mPoints;
 	private Color mColor;
 	private Polygon mProyecction;
+	private boolean mSelected;
+	private Polygon mSelection;
 
 	// REMEBER THAT THE POINT (0,0) IS IN THE UP-LEFT CORNER
 
@@ -25,11 +28,10 @@ public class Poly3D extends Polygon {
 		mColor = color;
 	}
 
-	public Polygon getProyection() {
+	public synchronized Polygon getProyection() {
 		if (mProyecction == null) {
 			mProyecction = calculateProyection();
 		}
-
 		return mProyecction;
 	}
 
@@ -54,15 +56,6 @@ public class Poly3D extends Polygon {
 		return poly;
 	}
 
-	private Polygon calculateProyection(int cx, int cy) {
-		Polygon poly = new Polygon();
-		for (int i = 0; i < mPoints.length; i++) {
-			Point p1 = PointConverter.convertPoint(mPoints[i]);
-			poly.addPoint(p1.x + cx, p1.y + cy);
-		}
-		return poly;
-	}
-
 	// PUBLIC METHODs
 	// TODO
 	public Point3D calculate_G_Center() {
@@ -71,29 +64,17 @@ public class Poly3D extends Polygon {
 		return null;
 	}
 
-	public void render(Graphics g) {
-		g.setColor(mColor);
-		mProyecction = calculateProyection();
-		g.drawPolygon(mProyecction);
-	}
-
 	public void renderLines(Graphics g) {
 		g.setColor(mColor);
 		mProyecction = calculateProyection();
 		g.drawPolygon(mProyecction);
 	}
 
-	public void renderFaces(Graphics g, int cx, int cy) {
+	public void renderFaces(Graphics g) {
 		g.setColor(mColor);
-		mProyecction = calculateProyection(cx, cy);
+		mProyecction = calculateProyection();
 		g.fillPolygon(mProyecction);
 
-	}
-
-	public void renderLines(Graphics g, int cx, int cy) {
-		g.setColor(mColor);
-		mProyecction = calculateProyection(cx, cy);
-		g.drawPolygon(mProyecction);
 	}
 
 	// [START]
@@ -101,28 +82,32 @@ public class Poly3D extends Polygon {
 	// Rotation
 	public void rotate(double xDegrees, double yDegrees, double zDegrees) {
 		for (Point3D p : mPoints) {
-			PointConverter.rotateAxisX(p, xDegrees, 1);
-			PointConverter.rotateAxisY(p, yDegrees, 1);
-			PointConverter.rotateAxisZ(p, zDegrees, 1);
+			PointConverter.rotateAxisX(p, xDegrees);
+			PointConverter.rotateAxisY(p, yDegrees);
+			PointConverter.rotateAxisZ(p, zDegrees);
 		}
+		mProyecction = calculateProyection();
 	}
 
 	public void rotateX(double xDegrees) {
 		for (Point3D p : mPoints) {
-			PointConverter.rotateAxisX(p, xDegrees, 1);
+			PointConverter.rotateAxisX(p, xDegrees);
 		}
+		mProyecction = calculateProyection();
 	}
 
 	public void rotateY(double yDegrees) {
 		for (Point3D p : mPoints) {
-			PointConverter.rotateAxisY(p, yDegrees, 1);
+			PointConverter.rotateAxisY(p, yDegrees);
 		}
+		mProyecction = calculateProyection();
 	}
 
 	public void rotateZ(double zDegrees) {
 		for (Point3D p : mPoints) {
-			PointConverter.rotateAxisZ(p, zDegrees, 1);
+			PointConverter.rotateAxisZ(p, zDegrees);
 		}
+		mProyecction = calculateProyection();
 	}
 
 	// Scale
@@ -171,7 +156,7 @@ public class Poly3D extends Polygon {
 	// TODO esta es la solucion chapucera que tenemos para saber que caras estan
 	// enfrtne y cuales detras
 	// Z = DEPTH
-	protected double getAverageDepth() {
+	public double getAverageDepth() {
 		double sum = 0;
 		for (Point3D p : mPoints) {
 			sum += p.z;

@@ -1,6 +1,6 @@
-package motorGraphic;
+package engine.scene3D;
 
-public class MyBuffer extends Thread {
+public class SceneBuffer extends Thread {
 
     private double mFps = 0;
     private boolean mRunning = false;
@@ -29,11 +29,11 @@ public class MyBuffer extends Thread {
         mFps = fps;
     }
 
-    public MyBuffer() {
+    public SceneBuffer() {
         mRunning = false;
     }
 
-    public MyBuffer(Runnable r) {
+    public SceneBuffer(Runnable r) {
         super(r);
     }
 

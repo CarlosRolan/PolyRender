@@ -1,4 +1,4 @@
-package shapes;
+package engine.obj.basic;
 
 import java.awt.Point;
 

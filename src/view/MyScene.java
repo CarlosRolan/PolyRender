@@ -1,14 +1,11 @@
 package view;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import shapes.MyCube;
-import shapes.MyPolyhedro;
-import shapes.Point3D;
-import shapes.Poly3D;
+import engine.obj.shapes.Axis;
+import engine.obj.shapes.MyCube;
 
 public class MyScene extends Canvas {
 
@@ -23,19 +20,7 @@ public class MyScene extends Canvas {
 	// OBJECTS TO RENDER
 	protected MyCube cube;
 
-	// XYZ AXIS
-	private final Poly3D xAxis = new Poly3D(Color.RED,
-			new Point3D(MyViewParams.DEFAULT_WIDTH, 0, 0), new Point3D(0, 0, 0),
-			new Point3D(-MyViewParams.DEFAULT_WIDTH, 0, 0));
-	private final Poly3D yAxis = new Poly3D(Color.GREEN,
-			new Point3D(0, MyViewParams.DEFAULT_WIDTH, 0), new Point3D(0, 0, 0),
-			new Point3D(0, -MyViewParams.DEFAULT_WIDTH, 0));
-	private final Poly3D zAxis = new Poly3D(Color.BLUE,
-			new Point3D(0, 0, MyViewParams.DEFAULT_HEIGHT),
-			new Point3D(0, 0, 0),
-			new Point3D(0, 0, -MyViewParams.DEFAULT_WIDTH));
-
-	private final MyPolyhedro axis = new MyPolyhedro(xAxis, yAxis, zAxis);
+	private final Axis axis = new Axis(100, 100, 100);
 
 	public MyScene() {
 		this.startX = MyViewParams.DEFAULT_START_X;

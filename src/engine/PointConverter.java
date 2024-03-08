@@ -1,10 +1,13 @@
-package motorGraphic;
+package engine;
 
 import java.awt.Point;
 
-import shapes.Point3D;
+import engine.obj.basic.Point3D;
 
 public final class PointConverter implements Parameters {
+
+	public static int height = 0;
+	public static int width = 0;
 
 	// The Z value is no the Y valua of the 3D pint and the Y value is now the X
 	// value from ABSTRACT 3D to visual 2D
@@ -20,7 +23,7 @@ public final class PointConverter implements Parameters {
 		// Remember that is inverted
 		int y2d = (int) (newVal[1]);
 		// IMPORTANT para sacar por canvas adecuadamente tengo que invertir el eje Y
-		return new Point(x2d, -y2d);
+		return new Point(x2d + width, -y2d + height);
 	}
 
 	// EL
@@ -33,10 +36,10 @@ public final class PointConverter implements Parameters {
 		// New calculated
 		double depth2 = distantFromCanvas - depth;
 
-		// double localScale = Math.abs(FOV / (depth2 + FOV));
+		double localScale = Math.abs(FOV / (depth2 + FOV));
 
 		// MAGICCCC perspective
-		// dist *= localScale;
+		dist *= localScale;
 
 		double[] newVal = new double[2];
 
@@ -49,26 +52,26 @@ public final class PointConverter implements Parameters {
 	// [START]
 	// =====================TRANSFORMATIONS===================================================
 	// Rotation
-	public static void rotateAxisX(Point3D p, double degrees, double speed) {
+	public static void rotateAxisX(Point3D p, double degrees) {
 		double radius = Math.sqrt(p.y * p.y + p.z * p.z);
 		double theta = Math.atan2(p.z, p.y);
-		theta += speed * Math.PI / 360 * degrees;
+		theta += Math.PI / 360 * degrees;
 		p.y = radius * Math.cos(theta);
 		p.z = radius * Math.sin(theta);
 	}
 
-	public static void rotateAxisY(Point3D p, double degrees, double speed) {
+	public static void rotateAxisY(Point3D p, double degrees) {
 		double radius = Math.sqrt(p.x * p.x + p.z * p.z);
 		double theta = Math.atan2(p.x, p.z);
-		theta += speed * Math.PI / 360 * degrees;
+		theta += Math.PI / 360 * degrees;
 		p.x = radius * Math.sin(theta);
 		p.z = radius * Math.cos(theta);
 	}
 
-	public static void rotateAxisZ(Point3D p, double degrees, double speed) {
+	public static void rotateAxisZ(Point3D p, double degrees) {
 		double radius = Math.sqrt(p.y * p.y + p.x * p.x);
 		double theta = Math.atan2(p.y, p.x);
-		theta += speed * Math.PI / 360 * degrees;
+		theta += Math.PI / 360 * degrees;
 		p.y = radius * Math.sin(theta);
 		p.x = radius * Math.cos(theta);
 	}
