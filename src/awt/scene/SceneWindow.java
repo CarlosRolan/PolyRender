@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferStrategy;
 
+import engine.Parameters;
 import engine.PointConverter;
 import engine.basic.Object3D;
 import engine.basic.Point3D;
@@ -38,6 +39,8 @@ public class SceneWindow extends Canvas implements SceneActions {
         addMouseListener(mSceneListener);
         addMouseMotionListener(mSceneListener);
         addMouseWheelListener(mSceneListener);
+
+        addKeyListener(mSceneListener);
     }
 
     // RENNDER OUR CANVAS-ALL THINGS U WANNA SEE HAS TO BE RENDER HERE
@@ -111,11 +114,13 @@ public class SceneWindow extends Canvas implements SceneActions {
 
     @Override
     public void zoomIn() {
-
+        Parameters.DISTANT_FROM_CANVAS -= 100;
     }
 
     @Override
     public void zoomOut() {
+
+        Parameters.DISTANT_FROM_CANVAS += 100;
 
     }
 

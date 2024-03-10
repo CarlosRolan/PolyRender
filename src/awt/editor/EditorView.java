@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -99,6 +100,7 @@ public class EditorView extends Frame {
         lb_s_h = new javax.swing.JLabel();
         p_control = new javax.swing.JPanel();
         p_south = new javax.swing.JPanel();
+        lb_distant_from_canvas = new Label();
 
         Button btnX = new Button("ROTATE X");
         Button btnY = new Button("ROTATE Y");
@@ -214,6 +216,8 @@ public class EditorView extends Frame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lb_s_h)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lb_distant_from_canvas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnX)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnY)
@@ -230,6 +234,7 @@ public class EditorView extends Frame {
                                         .addComponent(lb_z)
                                         .addComponent(lb_s_w)
                                         .addComponent(lb_s_h)
+                                        .addComponent(lb_distant_from_canvas)
                                         .addComponent(btnX)
                                         .addComponent(btnY)
                                         .addComponent(btnZ))
@@ -277,11 +282,14 @@ public class EditorView extends Frame {
     private javax.swing.JPanel p_control;
     private javax.swing.JPanel p_info;
     private javax.swing.JPanel p_south;
+    private Label lb_distant_from_canvas;
     // End of variables declaration
 
     public void onRender() {
         lb_s_h.setText("Height:" + sceneWindow.getHeight());
         lb_s_w.setText("Width:" + sceneWindow.getWidth());
+        lb_distant_from_canvas.setText("Distant from Canvas" + Parameters.DISTANT_FROM_CANVAS);
+
     }
 
 }

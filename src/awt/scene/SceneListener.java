@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import engine.Parameters;
 import scene3D.SceneActions;
 
 public class SceneListener
@@ -44,9 +45,10 @@ public class SceneListener
 		int wheelRotation = e.getWheelRotation();
 		if (wheelRotation == 1) {
 			// System.out.println("zoom-");
+			System.out.println(Parameters.DISTANT_FROM_CANVAS);
 			mSceneActions.zoomOut();
 		} else {
-			// System.out.println("zoom+");
+			System.out.println(Parameters.DISTANT_FROM_CANVAS);
 			mSceneActions.zoomIn();
 		}
 
@@ -122,28 +124,34 @@ public class SceneListener
 	// KEYBOARD IMPLEMENTATION
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("KEY PRESSED " + e.getKeyChar());
+		System.out.println("KEY TYPED " + e.getKeyCode());
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.isActionKey())
-			System.out.println("KEY PRESSED " + e.paramString());
-		else
-			System.out.println("KEY PRESSED " + e.getKeyChar());
+		System.out.println("KEY PRESSED " + e.getKeyCode());
 
+		int keyCOde = e.getKeyCode();
+
+		switch (keyCOde) {
+			case 38:
+				mSceneActions.zoomIn();
+				break;
+			case 40:
+				mSceneActions.zoomOut();
+				break;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		System.out.println("KEY PRESSED " + e.getKeyChar());
+		System.out.println("KEY RELEASED " + e.getKeyCode());
 
 	}
 
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent e) {
-		System.out.println(e.getKeyCode());
 		return false;
 	}
 
