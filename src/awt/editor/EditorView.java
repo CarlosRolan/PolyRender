@@ -1,14 +1,17 @@
 package awt.editor;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import awt.scene.SceneWindow;
-import engine.scene3D.SceneBuffer;
-import view.MyViewParams;
+import engine.Parameters;
+import scene3D.SceneBuffer;
 
 /**
  *
@@ -27,9 +30,10 @@ public class EditorView extends Frame {
 
     private SceneWindow sceneWindow;
     private SceneBuffer buffer;
+    boolean rotar = false;
 
     public EditorView() {
-        initWindow(MyViewParams.DEFAULT_WIDTH, MyViewParams.DEFAULT_HEIGHT);
+        initWindow(Parameters.DEFAULT_WIDTH, Parameters.DEFAULT_HEIGHT);
         initComponents();
         initBuffer();
     }
@@ -95,6 +99,52 @@ public class EditorView extends Frame {
         lb_s_h = new javax.swing.JLabel();
         p_control = new javax.swing.JPanel();
         p_south = new javax.swing.JPanel();
+
+        Button btnX = new Button("ROTATE X");
+        Button btnY = new Button("ROTATE Y");
+        Button btnZ = new Button("ROTATE Z");
+
+        btnX.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+
+                if (sceneWindow.rotateX) {
+                    sceneWindow.rotateX = false;
+                } else {
+                    sceneWindow.rotateX = true;
+                }
+            }
+
+        });
+
+        btnY.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+
+                if (sceneWindow.rotateY) {
+                    sceneWindow.rotateY = false;
+                } else {
+                    sceneWindow.rotateY = true;
+                }
+            }
+
+        });
+
+        btnZ.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+
+                if (sceneWindow.rotateZ) {
+                    sceneWindow.rotateZ = false;
+                } else {
+                    sceneWindow.rotateZ = true;
+                }
+            }
+
+        });
 
         this.addWindowListener(new WindowListener() {
 
@@ -163,6 +213,12 @@ public class EditorView extends Frame {
                                 .addComponent(lb_s_w)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lb_s_h)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnX)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnY)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnZ)
                                 .addContainerGap(255, Short.MAX_VALUE)));
         p_infoLayout.setVerticalGroup(
                 p_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +229,10 @@ public class EditorView extends Frame {
                                         .addComponent(lb_y)
                                         .addComponent(lb_z)
                                         .addComponent(lb_s_w)
-                                        .addComponent(lb_s_h))
+                                        .addComponent(lb_s_h)
+                                        .addComponent(btnX)
+                                        .addComponent(btnY)
+                                        .addComponent(btnZ))
                                 .addContainerGap(77, Short.MAX_VALUE)));
 
         add(p_info, java.awt.BorderLayout.PAGE_START);

@@ -1,4 +1,4 @@
-package engine.scene3D;
+package scene3D;
 
 public class SceneBuffer extends Thread {
 

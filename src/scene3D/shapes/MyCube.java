@@ -1,10 +1,10 @@
-package engine.obj.shapes;
+package scene3D.shapes;
 
 import java.awt.Color;
 
-import engine.obj.basic.Object3D;
-import engine.obj.basic.Point3D;
-import engine.obj.basic.Poly3D;
+import engine.basic.Object3D;
+import engine.basic.Point3D;
+import engine.basic.Poly3D;
 
 public class MyCube extends Object3D {
 

@@ -1,5 +1,5 @@
 
-package engine.obj.basic;
+package engine.basic;
 
 import java.awt.Color;
 import java.awt.Graphics;

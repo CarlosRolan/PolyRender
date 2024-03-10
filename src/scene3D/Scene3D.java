@@ -1,11 +1,11 @@
-package engine.scene3D;
+package scene3D;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import engine.obj.basic.Object3D;
-import engine.obj.shapes.Axis;
+import engine.basic.Object3D;
+import scene3D.shapes.Axis;
 
 public class Scene3D {
 

@@ -2,7 +2,7 @@ package engine;
 
 import java.awt.Point;
 
-import engine.obj.basic.Point3D;
+import engine.basic.Point3D;
 
 public final class PointConverter implements Parameters {
 
@@ -23,7 +23,7 @@ public final class PointConverter implements Parameters {
 		// Remember that is inverted
 		int y2d = (int) (newVal[1]);
 		// IMPORTANT para sacar por canvas adecuadamente tengo que invertir el eje Y
-		return new Point(x2d + width, -y2d + height);
+		return new Point(x2d + width, y2d + height);
 	}
 
 	// EL
@@ -34,7 +34,7 @@ public final class PointConverter implements Parameters {
 		// Angle b
 		double theta = Math.atan2(height, width);
 		// New calculated
-		double depth2 = distantFromCanvas - depth;
+		double depth2 = DISTANT_FROM_CANVAS - depth;
 
 		double localScale = Math.abs(FOV / (depth2 + FOV));
 

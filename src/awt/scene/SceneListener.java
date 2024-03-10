@@ -9,7 +9,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import engine.scene3D.SceneActions;
+import scene3D.SceneActions;
 
 public class SceneListener
 		implements
@@ -87,7 +87,6 @@ public class SceneListener
 		// mSceneListener.drawLine(x, y, e.getX(), e.getY());
 		mSceneActions.select(e.getX(), e.getY());
 		mSceneActions.cleanPainter();
-
 	}
 
 	@Override

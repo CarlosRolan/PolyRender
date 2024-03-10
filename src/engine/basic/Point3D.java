@@ -1,4 +1,4 @@
-package engine.obj.basic;
+package engine.basic;
 
 import java.awt.Point;
 
