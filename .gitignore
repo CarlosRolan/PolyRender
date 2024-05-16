@@ -1,2 +1,5 @@
 /bin/
 /.vscode/
+/javafx-sdk-21.0.1
+/jdk-22_linux-aarch64_bin.tar
+/openjfx-21.0.2_linux-x64_bin-sdk.tar
